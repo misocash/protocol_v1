@@ -340,7 +340,23 @@ task("masterchef:add", "Add pool to masterchef").setAction(async function (
   await (
     await masterChef
       .connect(await getNamedSigner("dev"))
-      .add(1000, "0x3e78a806b127c02b54419191571d9379819e989c", true)
+      // .add(1000, "0x3e78a806b127c02b54419191571d9379819e989c", true)
+      .add(1000, "0x25ca156E6b2d89D4f241e71F31cFbF73E96CC3F4", true)
+  ).wait();
+});
+
+task("masterchef:add2", "Add pool to masterchef").setAction(async function (
+  taskArguments,
+  { ethers: { getNamedSigner } },
+  runSuper
+) {
+  const masterChef = await ethers.getContract("MasterChef");
+
+  await (
+    await masterChef
+      .connect(await getNamedSigner("dev"))
+      // .add(1000, "0x3e78a806b127c02b54419191571d9379819e989c", true)
+      .add(1000, "0xc999AD6C0F1103191B9e5ADE12b647536A540d7E", true)
   ).wait();
 });
 

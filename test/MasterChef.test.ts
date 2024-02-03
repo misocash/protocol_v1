@@ -123,8 +123,8 @@ describe("MasterChef", function () {
       await this.chef.connect(this.bob).deposit(0, "0") // block 105
 
       expect(await this.sushi.balanceOf(this.bob.address)).to.equal("5000")
-      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("500")
-      expect(await this.sushi.totalSupply()).to.equal("5500")
+      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("0")
+      expect(await this.sushi.totalSupply()).to.equal("5000")
     })
 
     it("should not distribute SUSHIs if no one deposit", async function () {
@@ -146,9 +146,9 @@ describe("MasterChef", function () {
       expect(await this.lp.balanceOf(this.bob.address)).to.equal("990")
       await advanceBlockTo("219")
       await this.chef.connect(this.bob).withdraw(0, "10") // block 220
-      expect(await this.sushi.totalSupply()).to.equal("11000")
+      expect(await this.sushi.totalSupply()).to.equal("10000")
       expect(await this.sushi.balanceOf(this.bob.address)).to.equal("10000")
-      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("1000")
+      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("0")
       expect(await this.lp.balanceOf(this.bob.address)).to.equal("1000")
     })
 
@@ -181,22 +181,22 @@ describe("MasterChef", function () {
       //   MasterChef should have the remaining: 10000 - 5666 = 4334
       await advanceBlockTo("319")
       await this.chef.connect(this.alice).deposit(0, "10", { from: this.alice.address })
-      expect(await this.sushi.totalSupply()).to.equal("11000")
+      expect(await this.sushi.totalSupply()).to.equal("10000")
       expect(await this.sushi.balanceOf(this.alice.address)).to.equal("5666")
       expect(await this.sushi.balanceOf(this.bob.address)).to.equal("0")
       expect(await this.sushi.balanceOf(this.carol.address)).to.equal("0")
       expect(await this.sushi.balanceOf(this.chef.address)).to.equal("4334")
-      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("1000")
+      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("0")
       // Bob withdraws 5 LPs at block 330. At this point:
       //   Bob should have: 4*2/3*1000 + 2*2/6*1000 + 10*2/7*1000 = 6190
       await advanceBlockTo("329")
       await this.chef.connect(this.bob).withdraw(0, "5", { from: this.bob.address })
-      expect(await this.sushi.totalSupply()).to.equal("22000")
+      expect(await this.sushi.totalSupply()).to.equal("20000")
       expect(await this.sushi.balanceOf(this.alice.address)).to.equal("5666")
       expect(await this.sushi.balanceOf(this.bob.address)).to.equal("6190")
       expect(await this.sushi.balanceOf(this.carol.address)).to.equal("0")
       expect(await this.sushi.balanceOf(this.chef.address)).to.equal("8144")
-      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("2000")
+      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("0")
       // Alice withdraws 20 LPs at block 340.
       // Bob withdraws 15 LPs at block 350.
       // Carol withdraws 30 LPs at block 360.
@@ -206,8 +206,8 @@ describe("MasterChef", function () {
       await this.chef.connect(this.bob).withdraw(0, "15", { from: this.bob.address })
       await advanceBlockTo("359")
       await this.chef.connect(this.carol).withdraw(0, "30", { from: this.carol.address })
-      expect(await this.sushi.totalSupply()).to.equal("55000")
-      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("5000")
+      expect(await this.sushi.totalSupply()).to.equal("50000")
+      expect(await this.sushi.balanceOf(this.dev.address)).to.equal("0")
       // Alice should have: 5666 + 10*2/7*1000 + 10*2/6.5*1000 = 11600
       expect(await this.sushi.balanceOf(this.alice.address)).to.equal("11600")
       // Bob should have: 6190 + 10*1.5/6.5 * 1000 + 10*1.5/4.5*1000 = 11831

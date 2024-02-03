@@ -18,10 +18,15 @@ import "./tasks"
 import { HardhatUserConfig } from "hardhat/types"
 import { removeConsoleLog } from "hardhat-preprocessor"
 
-const accounts = {
-  mnemonic: process.env.MNEMONIC || "test test test test test test test test test test test junk",
-  // accountsBalance: "990000000000000000000",
-}
+// const accounts = {
+//   mnemonic: process.env.MNEMONIC || "test test test test test test test test test test test junk",
+//   // accountsBalance: "990000000000000000000",
+// }
+
+const accounts = [
+    process.env.DEPLOYER_PRIVATEKEY,
+    process.env.DEV_PRIVATEKEY,
+]
 
 const config: HardhatUserConfig = {
   abiExporter: {
@@ -33,7 +38,7 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: process.env.ETHERSCAN_API_KEY
   },
   gasReporter: {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
@@ -243,6 +248,15 @@ const config: HardhatUserConfig = {
       url: "https://exchaintestrpc.okex.org",
       accounts,
       chainId: 65,
+      live: true,
+      saveDeployments: true,
+      tags: ["staging"],
+      gasMultiplier: 2,
+    },
+    "b2-testnet": {
+      url: "https://haven-rpc.bsquared.network",
+      accounts,
+      chainId: 1102,
       live: true,
       saveDeployments: true,
       tags: ["staging"],

@@ -9,10 +9,10 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 
   let wethAddress;
 
-  if (chainId === "31337") {
-    wethAddress = (await deployments.get("WETH9Mock")).address;
+  if (chainId === "1102") {
+    wbtcAddress = (await deployments.get("WBTC9Mock")).address;
   } else if (chainId in WNATIVE_ADDRESS) {
-    wethAddress = WNATIVE_ADDRESS[chainId];
+    wbtcAddress = WNATIVE_ADDRESS[chainId];
   } else {
     throw Error("No WNATIVE!");
   }
@@ -21,7 +21,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 
   await deploy("UniswapV2Router02", {
     from: deployer,
-    args: [factoryAddress, wethAddress],
+    args: [factoryAddress, wbtcAddress],
     log: true,
     deterministicDeployment: false,
   });
